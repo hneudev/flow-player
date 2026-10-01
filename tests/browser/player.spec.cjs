@@ -102,3 +102,34 @@ test('independent instances, publishing trace and invalid fallback recovery', as
   await page.getByRole('button', { name: 'Replace flow' }).click();
   await expect(first(page)).toHaveAttribute('data-status', 'ready');
 });
+
+test('Tab and Space operate the controls with the player focus style over a host reset', async ({ page }) => {
+  await page.goto('/?small=1&reset=1');
+  const player = first(page);
+  const play = player.getByRole('button', { name: 'Play', exact: true });
+  // Tab from the last fixture control into the player: the first stop is its primary command.
+  await page.getByRole('button', { name: 'Toggle player' }).focus();
+  await page.keyboard.press('Tab');
+  await expect(play).toBeFocused();
+  await expect(play).toHaveCSS('outline-style', 'solid');
+  await expect(play).toHaveCSS('outline-width', '3px');
+  await expect(play).not.toHaveCSS('outline-color', 'rgb(255, 0, 0)');
+  // Disabled boundary commands are skipped; Next is reachable and operable with Space.
+  await page.keyboard.press('Tab');
+  await expect(player.getByRole('button', { name: 'Next', exact: true })).toBeFocused();
+  await page.keyboard.press('Space');
+  await expect(player).toHaveAttribute('data-status', 'paused');
+  await expect(player.locator('.fp-step[aria-current="step"]')).toContainText('1.');
+  // Previous is now enabled (it returns to ready), so it is the next stop backwards.
+  await page.keyboard.press('Shift+Tab');
+  await expect(player.getByRole('button', { name: 'Previous', exact: true })).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(player.getByRole('button', { name: 'Resume' })).toBeFocused();
+  await page.keyboard.press('Space');
+  await expect(player).toHaveAttribute('data-status', 'playing');
+  await page.keyboard.press('Space');
+  await expect(player).toHaveAttribute('data-status', 'paused');
+  // Connector text names the direction in words, not with an arrow glyph.
+  await expect(player.locator('.fp-edge .fp-sr-only').first()).toHaveText(/^Search query, Search the library to Handle the request, (Active|Completed)$/);
+  await expect(player.locator('.fp-edge[data-direction="backward"] .fp-sr-only').first()).toHaveText(/^Results, Handle the request to Search the library, (Next|Active)$/);
+});

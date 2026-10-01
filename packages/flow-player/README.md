@@ -68,7 +68,7 @@ MIT
 
 Default state is ready. Play/Pause/Resume/Replay, Previous, Next and Reset are native buttons; the step list supports direct selection. The component owns playback state. `defaultStepIndex` chooses the initial SSR state; `stepDurationMs` defaults to 2400 (clamped to 800–20000). `autoPlay` defaults to false and is suppressed under reduced motion. Explicit Play remains available without animation. Timers stop on unmount.
 
-`orientation` accepts auto/horizontal/vertical; auto uses the component container, not the page viewport. `colorScheme` accepts system/light/dark; system is the default. `reducedMotion="always"` forces static presentation. Use the `labels` partial object for control and status strings; `step` uses `{n}` and `{total}` placeholders.
+`orientation` accepts auto/horizontal/vertical; auto uses the component container, not the page viewport. `colorScheme` accepts system/light/dark; system is the default. `reducedMotion="always"` forces static presentation. Use the `labels` partial object for control and status strings; `step` uses `{n}` and `{total}` placeholders, and `to` joins the two node names in each connector's screen-reader text ("Interface to Server").
 
 Use `ref<FlowPlayerHandle>` for play, pause, next, previous, goTo, reset and getState. `onStepChange`, `onStatusChange`, and `onComplete` report committed transitions; no-op commands emit nothing. Supply immutable flow data; a new ID replaces the script, while changed content under the same ID updates it. Data and examples remain consumer-owned.
 

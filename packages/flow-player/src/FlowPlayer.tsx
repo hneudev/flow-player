@@ -8,11 +8,13 @@ export interface FlowPlayerLabels {
   play: string; pause: string; resume: string; replay: string; previous: string; next: string; reset: string;
   ready: string; playing: string; paused: string; completed: string; pending: string; active: string;
   legend: string; steps: string; controls: string; invalid: string; step: string;
+  /** Joins source and target in connector text read by assistive technology, e.g. "Interface to Server". */
+  to: string;
 }
 const defaults: FlowPlayerLabels = {
   play: 'Play', pause: 'Pause', resume: 'Resume', replay: 'Replay', previous: 'Previous', next: 'Next', reset: 'Reset',
   ready: 'Ready', playing: 'Playing', paused: 'Paused', completed: 'Completed', pending: 'Next', active: 'Active',
-  legend: 'States', steps: 'Steps', controls: 'Playback controls', invalid: 'This flow could not be displayed.', step: 'Step {n} of {total}',
+  legend: 'States', steps: 'Steps', controls: 'Playback controls', invalid: 'This flow could not be displayed.', step: 'Step {n} of {total}', to: 'to',
 };
 export interface FlowPlayerHandle {
   play(): void; pause(): void; next(): void; previous(): void; goTo(stepIndex: number): void; reset(): void;
@@ -151,7 +153,7 @@ export const FlowPlayer = forwardRef<FlowPlayerHandle, FlowPlayerProps>(function
           {index < frame.nodes.length - 1 && <div className="fp-edge-group">{edges.map(({ edge, direction, state: edgeState, label }) => <div className="fp-edge" key={edge.id} data-direction={direction} data-state={edgeState}>
             <span className="fp-arrow" aria-hidden="true">{direction === 'forward' ? '→' : '←'}</span>
             <span className="fp-edge-label" aria-hidden="true">{label}</span>
-            <span className="fp-sr-only">{label ? `${label}, ` : ''}{currentFlow.nodes.find(item => item.id === edge.from)?.label} → {currentFlow.nodes.find(item => item.id === edge.to)?.label}, {labels[edgeState]}</span>
+            <span className="fp-sr-only">{`${label ? `${label}, ` : ''}${currentFlow.nodes.find(item => item.id === edge.from)?.label} ${labels.to} ${currentFlow.nodes.find(item => item.id === edge.to)?.label}, ${labels[edgeState]}`}</span>
           </div>)}</div>}
         </li>;
       })}

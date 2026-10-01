@@ -47,3 +47,46 @@ Review all uncommitted library changes against `81fd332`. Next roadmap milestone
 ## Authorized GitHub handoff
 
 Owner requested committing all pending work and pushing both repositories, explicitly selecting a private library repository. Created private `hneudev/flow-player` and configured `origin`. This commits the task-10 working tree against `81fd332`; verification and WebKit limitations above remain unchanged. No npm release, tag, or deployment is included.
+
+## Review against the visual-component prompt (2026-10-01)
+
+The owner re-issued prompt 10 with a record path of `docs/tasks/10-visual-component.md`. Task 10 was already implemented in `e55363f`, so this review continues this record instead of creating a duplicate file. The review checked the implementation against each requirement:
+- nodes, connectors, active steps and explanations;
+- container-based horizontal/vertical layout;
+- keyboard controls and visible focus;
+- reduced motion and a textual equivalent;
+- scoped customization and multiple instances;
+- SSR safety;
+- no document-wide style or theme mutation;
+- 16px and 62.5% roots.
+
+**Fixed:**
+- **Connector direction for screen readers.** Each connector's visually hidden text joined the node names with "→", for example "Search the library → Handle the request". Screen readers at default punctuation settings may skip that glyph, losing the direction. It now reads "… Search the library to Handle the request, Active", as the contract specifies. The joining word is the new optional `labels.to` (default "to"), an additive change to `FlowPlayerLabels`.
+- **Coverage gap.** No test tabbed into the player, used Space, or checked that the focus indicator is drawn over a host's global `:focus-visible` rule. The fixture's `reset=1` mode now also mirrors portfolio-4.0's page-wide `:focus-visible` rule and `a { color: inherit }`. A new browser journey (62.5% root plus host reset) checks:
+  - Tab entry from the page into the primary control;
+  - the 3px solid player focus outline, not the host's;
+  - that disabled boundary commands are skipped;
+  - Space to operate Next, Resume and Pause;
+  - Shift+Tab order;
+  - the connector wording for a forward request and a backward response.
+
+**Reviewed without change:**
+- **Styles.** All selectors are scoped to `.fp-*`. The only global name is the prefixed `@keyframes fp-transit`.
+- **Theme.** Set per instance with `data-color-scheme`; nothing is written to `document`.
+- **Server rendering.** No `window` or `document` access during render. The controller starts with reduced motion assumed and resolves the real preference before `connect`, so SSR output and the first client render match and autoplay respects the preference.
+- **Timers.** `disconnect` on unmount clears them.
+- **Instances.** IDs come from `useId`, or the `id` prop.
+
+**Verification (actual, 2026-10-01, Node 24.17.0 / npm 11.13.0, after a clean `npm ci`):**
+
+| Check | Result |
+| --- | --- |
+| `npm run typecheck` | 0 errors |
+| `npm test` | 90 passed |
+| `npm run build` then `npm run check:consumers` | Passed. Tarball 42 files / 21,570 bytes. React 18.2 + TS 4.9.5 (`node`, `node16`) and React 19.3 + TS 5.9 (`bundler`) |
+| `npm run test:browser -- --project=chromium --project=firefox` | 12 passed: 6 journeys × 2 engines, 27.9s |
+| WebKit | Still cannot launch on this host: missing native libraries such as `libgstcodecparsers`, `libflite`, `libavif`, `libsoup-3.0`, `libmanette`. All 6 WebKit journeys fail at launch, before any assertion. This is an environment limitation, not a pass. |
+
+A component preview was already holding port 4310 from outside this session. The owner approved stopping it so that the browser suite could run.
+
+Full `npm run check` remains not green on this host only because of WebKit. Screen-reader output itself (NVDA, VoiceOver) was not exercised; the wording fix rests on the DOM text asserted above.
