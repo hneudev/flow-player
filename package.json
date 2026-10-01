@@ -1,0 +1,30 @@
+{
+  "name": "flow-player-repository",
+  "private": true,
+  "description": "Development repository for @hneudev/flow-player. Not published.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @hneudev/flow-player",
+    "typecheck": "npm run typecheck -w @hneudev/flow-player",
+    "test": "npm test -w @hneudev/flow-player",
+    "check:consumers": "node scripts/check-consumers.mjs",
+    "check": "npm run typecheck && npm test && npm run build && npm run check:consumers"
+  },
+  "engines": {
+    "node": "24.x",
+    "npm": "11.x"
+  },
+  "packageManager": "npm@11.13.0",
+  "devDependencies": {
+    "@types/node": "24.19.0",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@types/scheduler": "0.16.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.9.3",
+    "vitest": "5.0.3"
+  }
+}

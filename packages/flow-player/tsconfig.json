@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@hneudev/flow-player": [
+        "./src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "test",
+    "../../examples"
+  ]
+}

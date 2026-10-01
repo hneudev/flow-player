@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.tgz
+.tmp/
+fixtures/*/node_modules/

@@ -1,0 +1,17 @@
+{
+  "id": "fixture",
+  "title": "Fixture flow",
+  "caption": "Consumer fixture",
+  "nodes": [
+    { "id": "client", "kind": "Client", "label": "Send a request" },
+    { "id": "service", "kind": "Service", "label": "Answer it" }
+  ],
+  "edges": [
+    { "id": "request", "from": "client", "to": "service", "label": "Request" },
+    { "id": "response", "from": "service", "to": "client", "label": "Response" }
+  ],
+  "steps": [
+    { "id": "sent", "title": "Sent", "description": "The client sends a request.", "activeNodes": ["client"], "activeEdges": ["request"] },
+    { "id": "answered", "title": "Answered", "description": "The service responds.", "activeNodes": ["service"], "activeEdges": ["response"] }
+  ]
+}

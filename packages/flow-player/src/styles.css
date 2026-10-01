@@ -1,0 +1,92 @@
+/*
+ * @hneudev/flow-player styles. Every selector is scoped under .fp-root; sizes use em so the
+ * player inherits its container's font size instead of assuming a root font size.
+ * Public custom properties (--fp-*) are never defined here, so consumer values always win.
+ */
+.fp-root {
+  --_fp-bg: var(--fp-color-bg, #F6F6F2);
+  --_fp-surface: var(--fp-color-surface, #FFFFFF);
+  --_fp-text: var(--fp-color-text, #151515);
+  --_fp-muted: var(--fp-color-text-muted, #555B65);
+  --_fp-border: var(--fp-color-border, #CDCEC8);
+  --_fp-accent: var(--fp-color-accent, #244BFF);
+  --_fp-radius: var(--fp-radius, 0.25em);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1em;
+  font-family: var(--fp-font-family, inherit);
+  font-size: var(--fp-font-size, 1em);
+  line-height: 1.5;
+  color: var(--_fp-text);
+  background: var(--_fp-bg);
+  container-type: inline-size;
+}
+
+.fp-root *,
+.fp-root *::before,
+.fp-root *::after {
+  box-sizing: inherit;
+}
+
+.fp-lane {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 1.5em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fp-node {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  margin: 0;
+  padding: 1em;
+  border: 1px solid var(--_fp-border);
+  border-radius: var(--_fp-radius);
+  background: var(--_fp-surface);
+}
+
+.fp-node-kind,
+.fp-node-meta {
+  font-family: var(--fp-font-mono, ui-monospace, SFMono-Regular, Consolas, monospace);
+  font-size: 0.75em;
+  color: var(--_fp-muted);
+  text-transform: uppercase;
+}
+
+.fp-node-label {
+  font-weight: 600;
+}
+
+.fp-caption,
+.fp-notice {
+  margin: 1em 0 0;
+  font-size: 0.875em;
+  color: var(--_fp-muted);
+}
+
+.fp-issues {
+  margin: 0.5em 0 0;
+  padding: 0 0 0 1.25em;
+  font-size: 0.875em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .fp-root {
+    --_fp-bg: var(--fp-color-bg, #111318);
+    --_fp-surface: var(--fp-color-surface, #191C23);
+    --_fp-text: var(--fp-color-text, #F3F4F7);
+    --_fp-muted: var(--fp-color-text-muted, #ADB4C2);
+    --_fp-border: var(--fp-color-border, #3A414F);
+    --_fp-accent: var(--fp-color-accent, #8097FF);
+  }
+}
+
+@container (max-width: 40em) {
+  .fp-lane {
+    grid-auto-flow: row;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "fixture-react19-ts5",
+  "private": true,
+  "description": "React 19 with TypeScript 5 bundler resolution.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}
