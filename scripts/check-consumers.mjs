@@ -2,7 +2,7 @@
 // Requires a prior `npm run build`. Uses the npm registry for fixture dependencies.
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { cpSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
@@ -33,6 +33,25 @@ try {
     const expectedReact = JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8')).dependencies.react;
     const out = run('node', ['ssr.mjs'], dir, { EXPECTED_REACT: expectedReact });
     console.log(`PASS ${fixture}: install from tarball, declarations type-check; ${out.trim()}`);
+
+    // Documentation snippets: the exact files the docs display, checked in this clean install.
+    cpSync(join(root, 'apps/docs/src/snippets'), join(dir, 'snippets'), { recursive: true });
+    cpSync(join(root, 'fixtures/snippets-ssr.cjs'), join(dir, 'snippets-ssr.cjs'));
+    const checkConfigs = fixture === 'react18-ts49' ? ['tsconfig.json', 'tsconfig.node16.json'] : ['tsconfig.json'];
+    for (const base of checkConfigs) {
+      const name = `snippets.${base}`;
+      writeFileSync(join(dir, name), JSON.stringify({ extends: `./${base}`, include: ['snippets'] }));
+      run('npx', ['tsc', '-p', name], dir);
+    }
+    writeFileSync(join(dir, 'snippets.emit.json'), JSON.stringify({
+      compilerOptions: {
+        target: 'es2019', module: 'commonjs', moduleResolution: 'node', jsx: 'react-jsx', strict: true,
+        esModuleInterop: true, skipLibCheck: false, rootDir: 'snippets', outDir: 'snippets-out',
+      },
+      include: ['snippets'],
+    }));
+    run('npx', ['tsc', '-p', 'snippets.emit.json'], dir);
+    console.log(`PASS ${fixture}: ${run('node', ['snippets-ssr.cjs'], dir).trim()} (${checkConfigs.length} resolution mode${checkConfigs.length > 1 ? 's' : ''})`);
   }
 } finally {
   rmSync(work, { recursive: true, force: true });

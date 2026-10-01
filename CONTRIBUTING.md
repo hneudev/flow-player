@@ -11,7 +11,7 @@
 
 Install browser binaries and native libraries with `npx playwright install --with-deps chromium firefox webkit`. After building, `npm run test:browser` exercises the built exports through an SSR/hydration fixture in all three engines, including keyboard controls, responsive themes, reduced motion, and axe checks. Native library installation may require administrator access. A launch failure is an environment limitation, not a passing test.
 
-`npm run preview:component` serves that internal fixture on port 4310. Stop it before browser checks, which own the same port. See [task 10](docs/tasks/10-accessible-component.md) for actual results and remaining manual verification.
+`npm run preview:component` serves that internal fixture on port 4310, and `npm run docs:preview` serves the built docs site on port 4320. Browser checks start both themselves, so stop any running preview first. The docs site, its preview, and its deployment instructions are described in [apps/docs/README.md](apps/docs/README.md). See [task 10](docs/tasks/10-accessible-component.md) for actual results and remaining manual verification.
 
 ## Build output
 

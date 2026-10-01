@@ -1,0 +1,67 @@
+/* Documentation site styles. The player keeps its own scoped styles; nothing here targets .fp-* parts. */
+:root {
+  color-scheme: light dark;
+  --bg: #F6F6F2;
+  --surface: #FFFFFF;
+  --text: #151515;
+  --muted: #555B65;
+  --border: #CDCEC8;
+  --accent: #244BFF;
+  --code-bg: #EAEAE5;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  line-height: 1.6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111318;
+    --surface: #191C23;
+    --text: #F3F4F7;
+    --muted: #ADB4C2;
+    --border: #3A414F;
+    --accent: #8097FF;
+    --code-bg: #242833;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: 1rem; top: -4rem; padding: .5rem 1rem; background: var(--surface); }
+.skip:focus { top: 1rem; }
+.site-header, main, .site-footer { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+.site-header { padding-top: 2.5rem; border-bottom: 1px solid var(--border); }
+.eyebrow { font: .8rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+h1 { font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem); line-height: 1.05; letter-spacing: -.03em; margin: .5rem 0 1rem; }
+.lede { font-size: 1.15rem; max-width: 46rem; color: var(--muted); }
+nav ul { display: flex; flex-wrap: wrap; gap: .25rem 1rem; list-style: none; padding: 0; margin: 1.5rem 0; }
+main section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+h2 { font-size: 1.75rem; margin: 0 0 1rem; letter-spacing: -.02em; }
+h3 { margin: 1.5rem 0 .5rem; }
+p, li, dd { max-width: 70ch; }
+code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .9em; background: var(--code-bg); padding: .05em .3em; border-radius: .2em; overflow-wrap: anywhere; }
+.code { margin: 1rem 0; border: 1px solid var(--border); border-radius: .25rem; background: var(--surface); }
+.code figcaption { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .4rem .75rem; border-bottom: 1px solid var(--border); font: .85rem ui-monospace, monospace; color: var(--muted); }
+.code pre { margin: 0; padding: 1rem; overflow-x: auto; }
+.code pre code { background: none; padding: 0; overflow-wrap: normal; }
+button, input, select { font: inherit; }
+button { min-height: 2.75rem; padding: .4rem .9rem; border: 1px solid var(--border); border-radius: .25rem; background: var(--surface); color: var(--text); cursor: pointer; }
+input, select { min-height: 2.75rem; padding: .3rem .6rem; border: 1px solid var(--muted); border-radius: .25rem; background: var(--surface); color: var(--text); }
+.table-scroll { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; min-width: 36rem; }
+th, td { text-align: left; vertical-align: top; padding: .5rem .75rem; border-bottom: 1px solid var(--border); }
+tbody th { font-weight: 600; white-space: nowrap; }
+.simulation { padding: .75rem 1rem; border-left: 4px solid var(--accent); background: var(--surface); }
+.playground-options { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem 2rem; margin: 1rem 0; }
+fieldset { border: 1px solid var(--border); border-radius: .25rem; padding: .25rem 1rem .75rem; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+fieldset label { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.75rem; }
+.search-form { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: 1rem 0; }
+.search-form label { font-weight: 600; }
+.search-form input { flex: 1 1 14rem; max-width: 24rem; }
+.hint { color: var(--muted); font-size: .9rem; flex-basis: 100%; }
+.event-log { margin-top: 1rem; padding: .5rem 1rem; border: 1px dashed var(--border); border-radius: .25rem; font: .85rem/1.5 ui-monospace, monospace; }
+.event-log h3 { margin: .25rem 0; font-family: system-ui, sans-serif; font-size: 1rem; }
+.event-log ol { margin: 0; padding-left: 1.5rem; }
+dt { font-weight: 600; margin-top: 1rem; }
+dd { margin: .25rem 0 0; }
+.site-footer { padding-block: 2rem 3rem; color: var(--muted); font-size: .9rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
