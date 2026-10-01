@@ -31,11 +31,8 @@ The top-level `main`, `module`, and `types` fields serve `moduleResolution: node
 4. Server-renders through both the ESM and CJS entries.
 5. Checks that every stylesheet selector is `fp-`-scoped and that the package does not bring its own React.
 
-## Release (not yet authorized)
+## Release
 
-Roadmap prompt 13 covers release. Before any publication:
-- The owner confirms npm ownership of the `@hneudev` scope, the GitHub repository and its visibility, the LICENSE copyright line, and the docs hosting destination.
-- Run `npm run check` from a clean `npm ci`, review the tarball contents, and update `CHANGELOG.md` and the version.
-- Remove the `prepublishOnly` guard only as part of an authorized release.
+Follow [docs/releasing.md](docs/releasing.md). The current candidate, its artifact hashes and its review commits are in [task 13](docs/tasks/13-release-candidate.md). `npm run check:release` (part of `npm run check`) keeps the version, changelog, README usage, license and publish metadata consistent.
 
-Do not publish, tag, push, or deploy from routine work.
+Publishing, changing repository visibility, pushing tags and deploying each need explicit owner authorization. The `prepublishOnly` guard (`scripts/publish-guard.mjs`) rejects publishes from the package folder unless `FLOW_PLAYER_PUBLISH_APPROVED` equals the package version.

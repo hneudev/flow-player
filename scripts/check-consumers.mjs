@@ -1,5 +1,6 @@
-// Packs @hneudev/flow-player and installs the tarball into isolated consumer fixtures.
-// Requires a prior `npm run build`. Uses the npm registry for fixture dependencies.
+// Packs @hneudev/flow-player (or takes an existing tarball via --tarball <path>) and installs it
+// into isolated consumer fixtures. Packing requires a prior `npm run build`. Uses the npm registry
+// for fixture dependencies.
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -13,7 +14,17 @@ const run = (command, args, cwd, env = {}) =>
   execFileSync(command, args, { cwd, stdio: ['ignore', 'pipe', 'inherit'], encoding: 'utf8', env: { ...process.env, ...env } });
 
 try {
-  const [packed] = JSON.parse(run('npm', ['pack', '--json', '--pack-destination', work], pkgDir));
+  const given = process.argv.indexOf('--tarball');
+  let packed;
+  if (given > -1) {
+    const source = resolve(process.argv[given + 1]);
+    const filename = source.split('/').pop();
+    cpSync(source, join(work, filename));
+    const files = run('tar', ['-tzf', join(work, filename)], work).trim().split('\n').map(path => ({ path: path.replace(/^package\//, '') }));
+    packed = { filename, files, size: readFileSync(source).length };
+  } else {
+    [packed] = JSON.parse(run('npm', ['pack', '--json', '--pack-destination', work], pkgDir));
+  }
   const files = packed.files.map(file => file.path).sort();
   for (const required of ['LICENSE', 'README.md', 'CHANGELOG.md', 'package.json', 'dist/styles.css', 'dist/esm/index.js', 'dist/esm/index.d.ts', 'dist/cjs/index.js', 'dist/cjs/index.d.ts', 'dist/cjs/package.json']) {
     assert.ok(files.includes(required), `tarball is missing ${required}`);

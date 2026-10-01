@@ -1,9 +1,27 @@
 {
   "name": "@hneudev/flow-player",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A React component that plays scripted steps across a small, supplied architecture graph.",
+  "keywords": [
+    "react",
+    "architecture",
+    "diagram",
+    "flow",
+    "walkthrough",
+    "accessibility",
+    "explainer"
+  ],
   "license": "MIT",
   "author": "Hector Neudert",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hneudev/flow-player.git",
+    "directory": "packages/flow-player"
+  },
+  "homepage": "https://github.com/hneudev/flow-player/tree/main/packages/flow-player#readme",
+  "bugs": {
+    "url": "https://github.com/hneudev/flow-player/issues"
+  },
   "type": "module",
   "sideEffects": [
     "*.css"
@@ -36,7 +54,7 @@
     "build": "npm run clean && tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/finalize-build.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "prepublishOnly": "node -e \"console.error('Publishing @hneudev/flow-player requires explicit owner authorization (roadmap prompt 13).'); process.exit(1)\""
+    "prepublishOnly": "node ../../scripts/publish-guard.mjs"
   },
   "peerDependencies": {
     "@types/react": ">=18.0.28",
@@ -47,5 +65,8 @@
     "@types/react": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

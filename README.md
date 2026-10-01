@@ -2,9 +2,9 @@
 
 Development repository for [`@hneudev/flow-player`](packages/flow-player/README.md), an MIT-licensed React component that plays scripted steps across a small, supplied architecture graph.
 
-**Status:** pre-release. The npm package is not published. Source is hosted in the private [hneudev/flow-player](https://github.com/hneudev/flow-player) repository.
+**Status:** release candidate 0.1.0, not yet published to npm. The source is in the [hneudev/flow-player](https://github.com/hneudev/flow-player) repository, which is private until release. [Releasing](docs/releasing.md) describes the owner prerequisites and steps.
 - **Implemented:** scaffold (08), deterministic playback engine (09), accessible visual component (10), and documentation/playground site (11). See [task 10](docs/tasks/10-accessible-component.md) and [task 11](docs/tasks/11-docs-playground.md) for verification and environment limits.
-- **Next:** portfolio integration from the packed tarball (prompt 12), only when requested.
+- **Release candidate:** [task 13](docs/tasks/13-release-candidate.md) records the exact artifact, checks and remaining owner decisions.
 
 ## Layout
 

@@ -29,5 +29,5 @@ The independent source, test, and release repository for `@hneudev/flow-player` 
 ## Git and release
 
 - **Remote.** `origin` points to the private `hneudev/flow-player` GitHub repository. Do not push, change visibility, tag, or publish without explicit owner authorization.
-- **Publishing guard.** `prepublishOnly` deliberately fails until the release milestone.
+- **Publishing guard.** `prepublishOnly` (`scripts/publish-guard.mjs`) rejects folder publishes unless `FLOW_PLAYER_PUBLISH_APPROVED` equals the version. Follow [docs/releasing.md](docs/releasing.md) only after the owner authorizes a specific release; never set the variable on your own.
 - **Changes.** Commit only authorized changes, preserve unrelated work, and record actual check results in the task record. Do not present earlier results as new ones.

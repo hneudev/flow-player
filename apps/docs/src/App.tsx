@@ -44,7 +44,7 @@ export function App() {
     <>
       <a className="skip" href="#main">Skip to content</a>
       <header className="site-header">
-        <p className="eyebrow">@hneudev/flow-player · pre-release 0.0.0 · not yet published</p>
+        <p className="eyebrow">@hneudev/flow-player · 0.1.0 release candidate · not yet on npm</p>
         <h1>Follow a flow, one step at a time.</h1>
         <p className="lede">
           A React component that plays scripted steps across a small, supplied architecture graph. It <em>explains</em> a flow; it does not
@@ -71,16 +71,18 @@ export function App() {
 
         <section id="install" aria-labelledby="install-title">
           <h2 id="install-title">Install</h2>
+          <p>Once version 0.1.0 is published to npm:</p>
+          <CodeBlock label="Shell" code="npm install @hneudev/flow-player" />
           <p>
-            The package is not on npm yet. Until it is, build and pack it from the repository, then install the tarball in your project:
+            Until then, install the release-candidate tarball built from the repository:
           </p>
-          <CodeBlock label="Shell" code={`# in the flow-player repository
+          <CodeBlock label="Shell (before publication)" code={`# in the flow-player repository
 npm ci
 npm run build
 npm pack -w @hneudev/flow-player
 
 # in your project
-npm install /path/to/hneudev-flow-player-0.0.0.tgz`} />
+npm install /path/to/hneudev-flow-player-0.1.0.tgz`} />
           <p>
             React and React DOM are peer dependencies ({c('^18.2.0 || ^19.0.0')}); the package has no runtime dependencies. Import the
             stylesheet once, from any module (it is a plain CSS file in {c('node_modules')}).

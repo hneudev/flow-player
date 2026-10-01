@@ -11,13 +11,15 @@
     "typecheck": "npm run typecheck -w @hneudev/flow-player",
     "test": "npm test -w @hneudev/flow-player",
     "check:consumers": "node scripts/check-consumers.mjs",
-    "check": "npm run typecheck && npm test && npm run build && npm run check:docs-boundary && npm run typecheck -w flow-player-docs && npm run docs:build && npm run check:consumers && npm run test:browser",
+    "check": "npm run typecheck && npm test && npm run build && npm run check:docs-boundary && npm run typecheck -w flow-player-docs && npm run docs:build && npm run check:consumers && npm run check:release && npm run test:browser",
     "test:browser": "playwright test",
     "preview:component": "node tests/browser/server.mjs",
     "docs:dev": "npm run dev -w flow-player-docs",
     "docs:build": "npm run build -w flow-player-docs",
     "docs:preview": "npm run preview -w flow-player-docs",
-    "check:docs-boundary": "node scripts/check-docs-boundary.mjs"
+    "check:docs-boundary": "node scripts/check-docs-boundary.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "verify:published": "node scripts/verify-published.mjs"
   },
   "engines": {
     "node": "24.x",
