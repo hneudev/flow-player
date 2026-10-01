@@ -2,7 +2,7 @@
 
 ## Scope and status
 
-**Release candidate prepared; not published.** Baseline: `abcbb1f`, clean and in sync with `origin/main`.
+**Released 2026-10-01.** (Originally recorded as "release candidate prepared; not published"; see Publication below.) Baseline: `abcbb1f`, clean and in sync with `origin/main`.
 
 Nothing was published, no tag was created or pushed, the repository's visibility was not changed, and nothing was deployed. Publication is a separate, explicit owner instruction, following [docs/releasing.md](../releasing.md). After publication, the registry artifact must be verified before the portfolio adopts it.
 
@@ -110,3 +110,26 @@ Because WebKit cannot launch here, the single command `npm run check` is not gre
 Committed locally on `main`: `3ec8f66`, the artifact commit, plus the commit that adds this record. Nothing is pushed yet.
 
 After an explicit publishing instruction, follow [docs/releasing.md](../releasing.md) steps 2–4 and record the `verify:published` result here before asking the portfolio to adopt 0.1.0.
+
+## Publication (2026-10-01)
+
+The owner authorized publishing 0.1.0, making the repository public, keeping the reference images, and tagging after verification. The owner created the npm account `hneudev`.
+
+| Step | What happened |
+| --- | --- |
+| Login | Web login completed from this session. `npm whoami` → `hneudev` |
+| Publish | Two attempts from this session stopped at npm's 2FA check (`EOTP`); nothing was uploaded, and the registry confirmed it still returned 404. The browser approval flow needs an interactive terminal. **The owner published from their own terminal** (option B), using the reviewed tarball rebuilt from a fresh GitHub clone at `3ec8f66` (shasum re-checked before handover) |
+| Registry | `@hneudev/flow-player@0.1.0`, `dist-tags.latest = 0.1.0`, published `2026-10-01T08:25:08.280Z`. The registry's shasum `3b36071ab69785543f4178ffacbb08d204626d26` and integrity `sha512-hdpSmAyGD5Jq/…xRnlGQJIAr9tA==` equal the reviewed candidate. A newly published package's metadata briefly returned 404 from the CDN, then 200 |
+| `npm run verify:published -- 0.1.0 <integrity>` | **Passed.** Registry metadata and the downloaded tarball match the reviewed artifact byte for byte. The fresh-consumer checks then passed against the registry copy: React 18.2 / TS 4.9.5 (`node`, `node16`) and React 19.3 / TS 5.9.3 (`bundler`), declarations, ESM and CJS SSR, invalid fallback, stylesheet scope, no nested React, and all four doc snippets |
+| Install by name | `npm install @hneudev/flow-player@0.1.0 react@18.2.0 react-dom@18.2.0` in an empty project resolved `https://registry.npmjs.org/@hneudev/flow-player/-/flow-player-0.1.0.tgz` with the reviewed integrity. CJS `require` validated and server-rendered a flow. ESM `import` loaded `FlowPlayer` (a `forwardRef` object). `dist/styles.css` was present |
+| Visibility | `hneudev/flow-player` changed to **public** with `gh repo edit`. Anonymous requests for the repository page and `tree/main/packages/flow-player` (the package `homepage`) return 200 |
+| Tag and release | Annotated tag `v0.1.0` on `3ec8f66`, pushed. GitHub release created at https://github.com/hneudev/flow-player/releases/tag/v0.1.0, with the 0.1.0 changelog and the artifact hashes |
+| Docs | Root README, AGENTS.md and the docs site no longer say "not yet published" or "private". The docs install section now shows `npm install @hneudev/flow-player` |
+
+**Still open:**
+- Safari/WebKit is unverified (stated in the changelog).
+- No manual screen-reader testing has been done.
+- Docs hosting is undecided.
+- There is no CI workflow or npm provenance in this repository.
+
+**Next, as a separate portfolio task:** follow [docs/releasing.md](../releasing.md) step 6. Replace the vendored 0.0.0 tarball with the exact registry version `0.1.0`, confirm the lockfile records the integrity above, and run the portfolio checks.
