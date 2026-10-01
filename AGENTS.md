@@ -22,11 +22,11 @@ The independent source, test, and release repository for `@hneudev/flow-player` 
 ## Setup and checks
 
 - **Runtime.** Use Node 24.17.0 (`.nvmrc`) and npm 11.13.0. Install with `npm ci`.
-- **Full check.** `npm run check` runs typecheck, unit tests, build, and the packed-tarball consumer fixtures. The fixtures need registry access to install React and TypeScript versions.
-- **Individual scripts.** `npm run typecheck`, `npm test`, `npm run build`, and `npm run check:consumers`, which needs a prior build.
+- **Full check.** `npm run check` runs typecheck, unit tests, build, the packed-tarball consumer fixtures, and Chromium/Firefox/WebKit browser checks. Install browsers and host libraries with `npx playwright install --with-deps chromium firefox webkit`; report environment failures rather than skipping engines. The fixtures need registry access to install React and TypeScript versions.
+- **Individual scripts.** `npm run typecheck`, `npm test`, `npm run build`, and `npm run check:consumers`, which needs a prior build, plus `npm run test:browser` (also requires a build).
 
 ## Git and release
 
-- **Remote.** No remote exists yet. Do not create a GitHub repository, add a remote, push, change visibility, tag, or publish without explicit owner authorization.
+- **Remote.** `origin` points to the private `hneudev/flow-player` GitHub repository. Do not push, change visibility, tag, or publish without explicit owner authorization.
 - **Publishing guard.** `prepublishOnly` deliberately fails until the release milestone.
 - **Changes.** Commit only authorized changes, preserve unrelated work, and record actual check results in the task record. Do not present earlier results as new ones.

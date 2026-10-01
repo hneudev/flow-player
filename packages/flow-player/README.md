@@ -2,7 +2,7 @@
 
 A React component that plays scripted steps across a small, supplied architecture graph: nodes in a lane, directional edges between neighbours, and step-by-step explanations. It explains a flow; it does not observe, trace, or run one.
 
-> **Status: pre-release (0.0.0), not published.** The package builds and installs from a packed tarball. The playback engine is implemented and tested. The visual player is still a static scaffold. Controls, timed playback in the UI, events, and the ref handle arrive in a later milestone.
+> **Status: pre-release (0.0.0), not published.** The package builds and installs from a packed tarball. The playback engine is implemented and tested. The visual player now connects the engine, native controls, step selection, events and a React ref handle. Browser/SSR verification and remaining limits are recorded in the repository task-10 document.
 
 ## Install
 
@@ -57,8 +57,19 @@ Call `validateFlow(flow)` to get every issue with a severity, code, and path. A 
 
 - **Scope.** The stylesheet is scoped under `.fp-root` and never targets `html`, `body`, `:root`, or `*`.
 - **Sizing.** Sizes use `em`, so the player follows its container's font size and does not depend on the root font size.
-- **Colours and type.** Customize with `--fp-color-bg`, `--fp-color-surface`, `--fp-color-text`, `--fp-color-text-muted`, `--fp-color-border`, `--fp-color-accent`, `--fp-radius`, `--fp-font-size`, `--fp-font-family` and `--fp-font-mono`.
+- **Colours and type.** Customize with `--fp-color-bg`, `--fp-color-surface`, `--fp-color-text`, `--fp-color-text-muted`, `--fp-color-border`, `--fp-color-accent`, `--fp-color-on-accent`, `--fp-color-critical`, `--fp-color-focus`, `--fp-duration`, `--fp-radius`, `--fp-font-size`, `--fp-font-family` and `--fp-font-mono`.
 
 ## License
 
 MIT
+
+
+## Playback and accessibility
+
+Default state is ready. Play/Pause/Resume/Replay, Previous, Next and Reset are native buttons; the step list supports direct selection. The component owns playback state. `defaultStepIndex` chooses the initial SSR state; `stepDurationMs` defaults to 2400 (clamped to 800–20000). `autoPlay` defaults to false and is suppressed under reduced motion. Explicit Play remains available without animation. Timers stop on unmount.
+
+`orientation` accepts auto/horizontal/vertical; auto uses the component container, not the page viewport. `colorScheme` accepts system/light/dark; system is the default. `reducedMotion="always"` forces static presentation. Use the `labels` partial object for control and status strings; `step` uses `{n}` and `{total}` placeholders.
+
+Use `ref<FlowPlayerHandle>` for play, pause, next, previous, goTo, reset and getState. `onStepChange`, `onStatusChange`, and `onComplete` report committed transitions; no-op commands emit nothing. Supply immutable flow data; a new ID replaces the script, while changed content under the same ID updates it. Data and examples remain consumer-owned.
+
+State is communicated through text and line styles as well as color. A single polite live region summarizes steps; focus remains in the controls, moving to Play/Replay if the focused command becomes disabled. There are no global keyboard shortcuts. Provide meaningful plain-text titles/descriptions; test custom labels/colors and manual screen-reader use in the consuming application.

@@ -20,7 +20,7 @@ const invalid = renderToString(createElement(FlowPlayer, { flow: { ...flow, edge
 assert.match(invalid, /This flow could not be displayed/);
 
 const cjs = require('@hneudev/flow-player');
-assert.equal(typeof cjs.FlowPlayer, 'function');
+assert.ok(cjs.FlowPlayer, 'forwardRef component export must exist');
 assert.match(renderToString(createElement(cjs.FlowPlayer, { flow })), /Answer it/);
 
 const css = readFileSync(require.resolve('@hneudev/flow-player/styles.css'), 'utf8');
@@ -30,7 +30,7 @@ const selectors = css
   .replace(/\/\*[\s\S]*?\*\//g, '')
   .match(/[^{}]+(?=\{)/g)
   .map(text => text.trim())
-  .filter(text => !text.startsWith('@'))
+  .filter(text => !text.startsWith('@') && !/^(?:from|to|[\d.]+%)$/.test(text))
   .flatMap(text => text.split(','))
   .map(text => text.trim());
 assert.deepEqual(selectors.filter(selector => !selector.startsWith('.fp-')), [], 'unscoped selectors in stylesheet');

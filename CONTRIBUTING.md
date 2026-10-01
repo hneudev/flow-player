@@ -7,6 +7,12 @@
 - **Dependency pins.** TypeScript is pinned to 5.9.3, the latest 5.x when this was set up. The library emits declarations that the consumer fixtures check with TS 4.9.5. TypeScript 7 was not adopted for this build. React 18.2.0 and `@types/react` 18.0.28 match the oldest supported consumer. `@types/scheduler` is pinned to 0.16.3 because `@types/react` 18.0.28 imports `scheduler/tracing`, which newer versions removed. The portfolio resolves the same 0.16.3.
 - **Tests.** Vitest runs the unit tests from `packages/flow-player/test/` against the TypeScript source. The engine uses an injected fake scheduler, so no test depends on wall-clock time.
 
+## Browser verification and preview
+
+Install browser binaries and native libraries with `npx playwright install --with-deps chromium firefox webkit`. After building, `npm run test:browser` exercises the built exports through an SSR/hydration fixture in all three engines, including keyboard controls, responsive themes, reduced motion, and axe checks. Native library installation may require administrator access. A launch failure is an environment limitation, not a passing test.
+
+`npm run preview:component` serves that internal fixture on port 4310. Stop it before browser checks, which own the same port. See [task 10](docs/tasks/10-accessible-component.md) for actual results and remaining manual verification.
+
 ## Build output
 
 `npm run build` cleans `dist/`, then produces:

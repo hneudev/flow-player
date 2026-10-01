@@ -3,3 +3,6 @@ dist/
 *.tgz
 .tmp/
 fixtures/*/node_modules/
+
+test-results/
+playwright-report/

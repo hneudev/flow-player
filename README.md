@@ -2,9 +2,9 @@
 
 Development repository for [`@hneudev/flow-player`](packages/flow-player/README.md), an MIT-licensed React component that plays scripted steps across a small, supplied architecture graph.
 
-**Status:** pre-release. Nothing is published, and no remote repository exists.
-- **Done:** the scaffold (prompt 08) and the deterministic playback engine (prompt 09).
-- **Next:** the accessible visual component (prompt 10) and the docs/playground app (prompt 11).
+**Status:** pre-release. The npm package is not published. Source is hosted in the private [hneudev/flow-player](https://github.com/hneudev/flow-player) repository.
+- **Implemented:** scaffold (08), deterministic playback engine (09), and accessible visual component (10). See [task 10](docs/tasks/10-accessible-component.md) for verification and environment limits.
+- **Next:** the docs/playground app (prompt 11), only when requested.
 
 ## Layout
 
@@ -21,7 +21,12 @@ Development repository for [`@hneudev/flow-player`](packages/flow-player/README.
 ```sh
 nvm use            # Node 24.17.0
 npm ci
-npm run check      # typecheck, unit tests, build, packed consumer fixtures
+npx playwright install --with-deps chromium firefox webkit
+npm run check      # types, unit tests, build, packed consumers, browser journeys
 ```
 
 See [AGENTS.md](AGENTS.md) for contributor rules and boundaries.
+
+## Component preview
+
+Run `npm run build` then `npm run preview:component` and open http://127.0.0.1:4310/. This is the SSR browser-test fixture, not the future docs application. Stop it before browser checks, which own the same port.
