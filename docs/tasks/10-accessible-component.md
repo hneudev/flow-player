@@ -90,3 +90,8 @@ The owner re-issued prompt 10 with a record path of `docs/tasks/10-visual-compon
 A component preview was already holding port 4310 from outside this session. The owner approved stopping it so that the browser suite could run.
 
 Full `npm run check` remains not green on this host only because of WebKit. Screen-reader output itself (NVDA, VoiceOver) was not exercised; the wording fix rests on the DOM text asserted above.
+
+
+## WebKit verification (2026-10-12)
+
+WebKit was verified for the first time: CI (see `docs/ci-and-pages-plan.md`, section "First CI run") and a local run in Playwright's Docker image. All 30 browser tests pass in Chromium, Firefox and WebKit. A test-only timing fix was needed for back-to-back reduced-motion switches; no component change was required.

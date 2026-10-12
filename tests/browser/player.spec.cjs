@@ -82,7 +82,10 @@ test('reduced motion suppresses autoplay, allows explicit playback and reacts li
   await player.getByRole('button', { name: 'Play', exact: true }).click();
   await expect(player).toHaveAttribute('data-status', 'playing');
   await expect(player.locator('.fp-edge[data-state="active"] .fp-arrow').first()).toHaveCSS('animation-name', 'none');
+  // Wait until the player has observed each preference change: WebKit delivers matchMedia
+  // change events at its next rendering update, so back-to-back switches can cancel out.
   await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await expect(player).toHaveAttribute('data-reduced-motion', 'false');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(player).toHaveAttribute('data-status', 'paused');
   await page.emulateMedia({ forcedColors: 'active' });

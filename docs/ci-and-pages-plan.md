@@ -132,3 +132,14 @@ Notes:
 - CI is green on `main` with all three engines, so **WebKit is verified for the first time**. If WebKit fails, the failure is a real finding for a library fix, not a reason to drop the engine.
 - The Pages URL renders the docs and playground with no failed requests, in both color schemes.
 - No secrets in workflows; no publish step in CI.
+
+## First CI run (2026-10-12)
+
+- Run `38300622537` on `65210ba`: everything passed except **one WebKit browser test**, 29/30 overall.
+  - Passed: typecheck, 90 unit tests, builds, both consumer fixtures (`react18-ts49`, `react19-ts5`), release check.
+  - Failed: "reduced motion suppresses autoplay, allows explicit playback and reacts live" expected `paused` and received `completed`.
+- **Reproduced locally** in `mcr.microsoft.com/playwright:v1.63.0-noble` (Docker), which has WebKit's system libraries.
+- **Cause.** The test switched `prefers-reduced-motion` from `reduce` to `no-preference` and straight back. WebKit delivers `matchMedia` change events at its next rendering update, so the two switches cancelled out and the player never observed reduced motion turning on. Chromium and Firefox deliver both.
+  - **The library behaves correctly.** Once the "off" change is observed, the "on" change pauses playback in WebKit as specified.
+- **Fix (test only).** Wait for `data-reduced-motion="false"` before switching back. The contract is unchanged and no library code changed.
+- **Result in the container:** the full browser suite passes in all three engines, **30/30. This is the first complete WebKit verification** (task 10 listed it as outstanding).
