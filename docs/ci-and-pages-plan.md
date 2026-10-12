@@ -1,6 +1,6 @@
 # CI and GitHub Pages plan (proposal)
 
-Status: **proposal for owner review** (portfolio Q07, owner selection A, 2026-10-12: "prepare library CI and GitHub Pages docs plan for review; no deployment authorization"). Author: Claude, 2026-10-12. Baseline: `76e328a`.
+Status: **approved by the owner on 2026-10-12** (step 1). Step 2: `.github/workflows/ci.yml` added (validated with `@action-validator/cli`; local `npm run check` steps pass except WebKit, which only CI can run); pushing it starts CI. Steps 3–5 still need separate authorization. Originally a proposal (portfolio Q07, owner selection A, 2026-10-12: "prepare library CI and GitHub Pages docs plan for review; no deployment authorization"). Author: Claude, 2026-10-12. Baseline: `76e328a`.
 
 Nothing here is active: the workflows below are drafts in this document, not files in `.github/workflows/`. Adding them, enabling Pages and the first deployment are separate authorizations (section 5).
 
