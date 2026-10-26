@@ -154,3 +154,4 @@ Author: Claude. Starting commit `2569fd6`.
 - **Local checks:** typecheck, 90 unit tests, docs boundary, docs typecheck/build, and Chromium + Firefox browser suites 22/22 (including the new version test). WebKit runs in CI. A root-owned Vite cache left by an earlier container run blocked the local docs server; it was removed (regenerable cache only).
 - **Step 5** (portfolio link) follows in portfolio-4.0 once the site is verified.
 
+- **Result:** CI (Chromium, Firefox, WebKit) and "Docs to GitHub Pages" passed on `63df3e2`. In Chromium, `https://hneudev.github.io/flow-player/` loads in light and dark schemes with no page errors, no failed or 4xx/5xx requests, header `@hneudev/flow-player · 0.1.0 · MIT` and the playground ready. Repository homepage set to the Pages URL.
