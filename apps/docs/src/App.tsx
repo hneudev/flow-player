@@ -234,7 +234,7 @@ export function App() {
             ['TypeScript', '≥ 4.9 (node, node16, bundler resolution)', 'TS 4.9.5 with @types/react 18.0.28; TS 5.9.3'],
             ['Modules', 'ESM and CommonJS, with types for both', 'Both entries rendered in Node'],
             ['Server rendering', 'Safe to import and render on the server; no timers start until mount', 'SSR + hydration browser fixture'],
-            ['Browsers', 'Current Chrome/Edge, Firefox and Safari; iOS Safari ≥ 16.4', 'Chromium and Firefox automated; WebKit pending a capable host'],
+            ['Browsers', 'Current Chrome/Edge, Firefox and Safari; iOS Safari ≥ 16.4', 'Chromium, Firefox and WebKit automated in CI'],
           ]} />
         </section>
 
@@ -245,7 +245,7 @@ export function App() {
             <li>Scripted, deterministic playback only: no real telemetry, tracing, code inspection, network capture or backend execution.</li>
             <li>No graph editing, loops or speed control, and no fully controlled playback mode; the component owns playback state.</li>
             <li>Flow text is plain text; rich content inside nodes is not supported.</li>
-            <li>Pre-release: the API may change in 0.x minor versions. Not yet published to npm.</li>
+            <li>Pre-release: the API may change in 0.x minor versions. This site is built from the main branch and can describe changes that are not yet published to npm.</li>
           </ul>
         </section>
 

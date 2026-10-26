@@ -1,6 +1,6 @@
 # CI and GitHub Pages plan (proposal)
 
-Status: **approved by the owner on 2026-10-12** (step 1). Step 2: `.github/workflows/ci.yml` added (validated with `@action-validator/cli`; local `npm run check` steps pass except WebKit, which only CI can run); pushing it starts CI. Steps 3–5 still need separate authorization. Originally a proposal (portfolio Q07, owner selection A, 2026-10-12: "prepare library CI and GitHub Pages docs plan for review; no deployment authorization"). Author: Claude, 2026-10-12. Baseline: `76e328a`.
+Status: **approved by the owner on 2026-10-12** (step 1). Step 2: `.github/workflows/ci.yml` added (validated with `@action-validator/cli`; local `npm run check` steps pass except WebKit, which only CI can run); pushing it starts CI. Steps 3–5 authorized by the owner on 2026-10-26 ("autorizo todas las actividades pendientes de flow player"); see [Pages deployment](#pages-deployment-2026-10-26). Originally a proposal (portfolio Q07, owner selection A, 2026-10-12: "prepare library CI and GitHub Pages docs plan for review; no deployment authorization"). Author: Claude, 2026-10-12. Baseline: `76e328a`.
 
 Nothing here is active: the workflows below are drafts in this document, not files in `.github/workflows/`. Adding them, enabling Pages and the first deployment are separate authorizations (section 5).
 
@@ -143,3 +143,14 @@ Notes:
   - **The library behaves correctly.** Once the "off" change is observed, the "on" change pauses playback in WebKit as specified.
 - **Fix (test only).** Wait for `data-reduced-motion="false"` before switching back. The contract is unchanged and no library code changed.
 - **Result in the container:** the full browser suite passes in all three engines, **30/30. This is the first complete WebKit verification** (task 10 listed it as outstanding).
+
+## Pages deployment (2026-10-26)
+
+Author: Claude. Starting commit `2569fd6`.
+
+- **Step 3:** Pages enabled with source "GitHub Actions" (`gh api -X POST repos/hneudev/flow-player/pages -f build_type=workflow`); site URL `https://hneudev.github.io/flow-player/`.
+- **Step 4:** `.github/workflows/pages.yml` as drafted in section 3, plus a 15-minute build timeout and the workflow file itself in the path filter. Validated with `@action-validator/cli`.
+- **Docs accuracy before going public:** the Limitations list said "Not yet published to npm" (0.1.0 has been on npm since DEP-03) and the browser row said "WebKit pending a capable host" (verified in CI since `2569fd6`). Both corrected. The header already shows the package version; a docs test now asserts it equals `packages/flow-player/package.json`, so the site always states the version it was built from, and the Limitations list says the site is built from `main`.
+- **Local checks:** typecheck, 90 unit tests, docs boundary, docs typecheck/build, and Chromium + Firefox browser suites 22/22 (including the new version test). WebKit runs in CI. A root-owned Vite cache left by an earlier container run blocked the local docs server; it was removed (regenerable cache only).
+- **Step 5** (portfolio link) follows in portfolio-4.0 once the site is verified.
+

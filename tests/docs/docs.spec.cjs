@@ -15,6 +15,12 @@ test.afterEach(async ({ page }) => { expect(page.errors).toEqual([]); });
 
 const player = page => page.locator('#playground .fp-root');
 
+test('header shows the package version the site was built from', async ({ page }) => {
+  const { version } = JSON.parse(readFileSync(join(__dirname, '../../packages/flow-player/package.json'), 'utf8'));
+  await page.goto(docs);
+  await expect(page.locator('.site-header .eyebrow')).toHaveText(`@hneudev/flow-player · ${version} · MIT`);
+});
+
 test('search example: run, pause, step, reset and replacement by a new query', async ({ page }) => {
   await page.goto(docs);
   await expect(page.getByRole('note').filter({ hasText: 'Illustrative simulation.' })).toBeVisible();
