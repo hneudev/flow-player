@@ -24,7 +24,7 @@ npm run docs:preview   # serves apps/docs/dist/ at http://127.0.0.1:4320/
 
 Browser checks start their own preview on port 4320 and refuse to reuse a running one. Stop any preview before you run `npm run test:browser`.
 
-## Deployment (instructions only; nothing has been deployed)
+## Deployment
 
 The build output in `apps/docs/dist/` is static HTML, JS, and CSS. It has no server code, environment secrets, or API calls, so any static host works.
 
@@ -34,8 +34,4 @@ The build output in `apps/docs/dist/` is static HTML, JS, and CSS. It has no ser
 2. Upload the contents of `apps/docs/dist/`.
 3. Check the deployed page: both examples play, the `Copy` buttons work over HTTPS, and there are no console errors.
 
-**Before anything is deployed, the owner must decide two things:**
-- **Hosting destination.** Not chosen yet; the earlier task records list it as an open owner decision.
-- **Repository visibility.** The source repository is private. GitHub Pages from a private repository requires a paid plan, and makes the site public anyway.
-
-Do not deploy without explicit authorization. If a CI deployment is added later, give it only the deployment permission it needs, and keep credentials out of the repository.
+**Current deployment:** GitHub Pages at https://hneudev.github.io/flow-player/, built from `main` with `DOCS_BASE=/flow-player/` by `.github/workflows/pages.yml` (owner-authorized 2026-10-26; record in [docs/ci-and-pages-plan.md](../../docs/ci-and-pages-plan.md)). The workflow has only the `pages: write` and `id-token: write` permissions it needs and uses no secrets. Changes to the deployment itself still need owner authorization.

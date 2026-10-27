@@ -5,6 +5,7 @@ Development repository for [`@hneudev/flow-player`](packages/flow-player/README.
 **Status:** version 0.1.0 is [published on npm](https://www.npmjs.com/package/@hneudev/flow-player) (`npm install @hneudev/flow-player`), tagged [`v0.1.0`](https://github.com/hneudev/flow-player/releases/tag/v0.1.0). [Releasing](docs/releasing.md) describes the release process.
 - **Implemented:** scaffold (08), deterministic playback engine (09), accessible visual component (10), and documentation/playground site (11). See [task 10](docs/tasks/10-accessible-component.md) and [task 11](docs/tasks/11-docs-playground.md) for verification and environment limits.
 - **Released:** [task 13](docs/tasks/13-release-candidate.md) records the exact artifact, its registry verification and the publication.
+- **Documentation:** https://hneudev.github.io/flow-player/, deployed by GitHub Pages ([plan and record](docs/ci-and-pages-plan.md)).
 
 ## Layout
 
@@ -30,7 +31,7 @@ See [AGENTS.md](AGENTS.md) for contributor rules and boundaries.
 
 ## Previews
 
-- **Documentation and playground:** `npm run build`, then `npm run docs:dev` (or `npm run docs:build && npm run docs:preview`), and open http://127.0.0.1:4320/. Deployment instructions are in [apps/docs/README.md](apps/docs/README.md); nothing is deployed.
+- **Documentation and playground:** `npm run build`, then `npm run docs:dev` (or `npm run docs:build && npm run docs:preview`), and open http://127.0.0.1:4320/. The site is published at https://hneudev.github.io/flow-player/ from `main` by `.github/workflows/pages.yml`; see [apps/docs/README.md](apps/docs/README.md).
 - **Component test fixture:** `npm run build`, then `npm run preview:component`, and open http://127.0.0.1:4310/. This is the SSR browser-test fixture.
 
 Stop both previews before browser checks, which own the same ports.
